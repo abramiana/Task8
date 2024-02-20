@@ -15,6 +15,7 @@ import java.util.List;
 public class DatabaseQueryService {
 
     private static final Logger logger = LogManager.getLogger(DatabaseQueryService.class);
+    Connection connection = Database.getInstance().getConnection();
 
     /**
      * Цей метод знаходить клієнтів з найбільшою кількістю проєктів
@@ -22,8 +23,8 @@ public class DatabaseQueryService {
     public List<MaxProjectCountClient> findMaxProjectsClient() {
         List<MaxProjectCountClient> result = new ArrayList<>();
         String sqlQuery = "src/sql/find_max_projects_client.sql";
-        try (Connection ignored = Database.getInstance().getConnection();
-             ResultSet resultSet = Database.getInstance().executeQueryFromFile(sqlQuery)) {
+        try (ResultSet resultSet = Database.getInstance().executeQueryFromFile(connection, sqlQuery);
+        ) {
             if (resultSet != null) {
                 while (resultSet.next()) {
                     String name = resultSet.getString("name");
@@ -34,6 +35,7 @@ public class DatabaseQueryService {
         } catch (SQLException | IOException e) {
             logger.error("Error occurred while fetching max project count clients: {}", e.getMessage());
         }
+        logger.info("Database connection  {}", Database.getInstance().isConnected());
         return result;
     }
 
@@ -43,8 +45,7 @@ public class DatabaseQueryService {
     public List<LongestProject> findLongestProject() {
         List<LongestProject> result = new ArrayList<>();
         String sqlQuery = "src/sql/find_longest_project.sql";
-        try (Connection ignored = Database.getInstance().getConnection();
-             ResultSet resultSet = Database.getInstance().executeQueryFromFile(sqlQuery)) {
+        try (ResultSet resultSet = Database.getInstance().executeQueryFromFile(connection, sqlQuery)) {
             if (resultSet != null && resultSet.next()) {
                 int projectId = resultSet.getInt("ID");
                 Date startDate = resultSet.getDate("START_DATE");
@@ -61,6 +62,7 @@ public class DatabaseQueryService {
         } catch (SQLException | IOException e) {
             logger.error("Error occurred while fetching the longest project: {}", e.getMessage());
         }
+        logger.info("Database connection  {}", Database.getInstance().isConnected());
         return result;
     }
 
@@ -70,8 +72,7 @@ public class DatabaseQueryService {
     public List<Worker> findWorkerWithMaxSalary() {
         List<Worker> result = new ArrayList<>();
         String sqlQuery = "src/sql/find_max_salary_worker.sql";
-        try (Connection connection = Database.getInstance().getConnection();
-             ResultSet resultSet = Database.getInstance().executeQueryFromFile(sqlQuery)) {
+        try (ResultSet resultSet = Database.getInstance().executeQueryFromFile(connection, sqlQuery)) {
             while (resultSet.next()) {
                 String name = resultSet.getString("NAME");
                 double salary = resultSet.getDouble("SALARY");
@@ -80,6 +81,7 @@ public class DatabaseQueryService {
         } catch (SQLException | IOException e) {
             logger.error("Error occurred while fetching workers with max salary: {}", e.getMessage());
         }
+        logger.info("Database connection  {}", Database.getInstance().isConnected());
         return result;
     }
 
@@ -89,8 +91,7 @@ public class DatabaseQueryService {
     public List<Worker> findOldestAndYoungestWorkers() {
         List<Worker> result = new ArrayList<>();
         String sqlQuery = "src/sql/find_youngest_eldest_workers.sql";
-        try (Connection connection = Database.getInstance().getConnection()) {
-            ResultSet resultSet = Database.getInstance().executeQueryFromFile(sqlQuery);
+        try (ResultSet resultSet = Database.getInstance().executeQueryFromFile(connection, sqlQuery)) {
             while (resultSet.next()) {
                 String name = resultSet.getString("NAME");
                 Date birthday = resultSet.getDate("BIRTHDAY");
@@ -100,6 +101,7 @@ public class DatabaseQueryService {
         } catch (SQLException | IOException e) {
             logger.error("Error occurred while fetching oldest and youngest workers: {}", e.getMessage());
         }
+        logger.info("Database connection  {}", Database.getInstance().isConnected());
         return result;
     }
 
@@ -109,19 +111,22 @@ public class DatabaseQueryService {
     public List<ProjectPrice> findProjectPrices() {
         List<ProjectPrice> result = new ArrayList<>();
 
-        try (Connection connection = Database.getInstance().getConnection()) {
-            String sqlQuery = "src/sql/print_project_prices.sql"; // Шлях до файлу з SQL-запитом
+        String sqlQuery = "src/sql/print_project_prices.sql"; // Шлях до файлу з SQL-запитом
 
-            try (ResultSet resultSet = Database.getInstance().executeQueryFromFile(sqlQuery)) {
-                while (resultSet.next()) {
-                    String projectName = resultSet.getString("Name");
-                    double projectPrice = resultSet.getDouble("Price");
-                    result.add(new ProjectPrice(projectName, projectPrice));
-                }
+        try (ResultSet resultSet = Database.getInstance().executeQueryFromFile(connection, sqlQuery)) {
+            while (resultSet.next()) {
+                String projectName = resultSet.getString("Name");
+                double projectPrice = resultSet.getDouble("Price");
+                result.add(new ProjectPrice(projectName, projectPrice));
             }
         } catch (SQLException | IOException e) {
             logger.error("Error occurred while fetching project prices: {}", e.getMessage());
         }
+        logger.info("Database connection  {}", Database.getInstance().isConnected());
+        Database.getInstance().closeConnection(); // Закриття контакту з БД.
+        logger.info("Database connection  {}", Database.getInstance().isConnected());
         return result;
+
     }
+
 }

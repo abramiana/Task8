@@ -76,7 +76,7 @@ public class Database {
     /**
      * Зчитує SQL-запит з файлу та виконує його
      */
-    public ResultSet executeQueryFromFile(String filename) throws SQLException, IOException {
+    public ResultSet executeQueryFromFile(Connection connection, String filename) throws SQLException, IOException {
         StringBuilder query = new StringBuilder();
         try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
             String line;

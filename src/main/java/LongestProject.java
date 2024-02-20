@@ -1,5 +1,9 @@
 import java.util.Date;
 
+/**
+ * Клас, що представляє найтриваліший проєкт з інформацією про його ідентифікатор, дати початку та завершення,
+ * тривалість у місяцях та ідентифікатор клієнта.
+ */
 public class LongestProject {
     private int id;
     private Date startDate;

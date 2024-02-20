@@ -4,46 +4,70 @@ public class Main {
     public static void main(String[] args) {
         DatabaseQueryService queryService = new DatabaseQueryService();
 
-        // Викликаємо метод findMaxProjectsClient() для отримання списку клієнтів з максимальною кількістю проектів
+        printMaxProjectCountClients(queryService);
+        printLongestProject(queryService);
+        printWorkerWithMaxSalary(queryService);
+        printOldestAndYoungestWorkers(queryService);
+        printProjectPrices(queryService);
+    }
+
+    /**
+     * Виводить інформацію про клієнтів з максимальною кількістю проєктів.
+     *
+     * @param queryService об'єкт DatabaseQueryService для виконання запитів до бази даних
+     */
+    private static void printMaxProjectCountClients(DatabaseQueryService queryService) {
         List<MaxProjectCountClient> maxProjectCountClients = queryService.findMaxProjectsClient();
-
-        // Виводимо інформацію про кожного клієнта з максимальною кількістю проектів
         System.out.println("Clients with maximum project count:");
-        for (MaxProjectCountClient client : maxProjectCountClients) {
-            System.out.println(client);
-        }
+        maxProjectCountClients.forEach(System.out::println);
+        System.out.println("----------------------------------------------------");
+    }
 
-
-        //  Викликаємо метод findLongestProject() для отримання найдовший тривалий проект
-        List<LongestProject> longestProject = queryService.findLongestProject();
-
-        // Виводимо інформацію про кожного клієнта з максимальною кількістю проектів
+    /**
+     * Виводить інформацію про проекти з найбільшою тривалістю.
+     *
+     * @param queryService об'єкт DatabaseQueryService для виконання запитів до бази даних
+     */
+    private static void printLongestProject(DatabaseQueryService queryService) {
+        List<LongestProject> longestProjects = queryService.findLongestProject();
         System.out.println("Project with the longest duration:");
-        for (LongestProject client : longestProject) {
-            System.out.println(client);
-        }
-        List<Worker> worker = queryService.findWorkerWithMaxSalary();
+        longestProjects.forEach(System.out::println);
+        System.out.println("----------------------------------------------------");
+    }
 
-        // Виводимо інформацію про працівника з найбільшою заробітною платою
-        System.out.println("Employee with the highest salary: ");
-        for (Worker employee : worker) {
-            System.out.println(employee);
-        }
-        List<Worker> workerOld = queryService.findOldestAndYoungestWorkers();
+    /**
+     * Виводить інформацію про працівника з найвищою зарплатою.
+     *
+     * @param queryService об'єкт DatabaseQueryService для виконання запитів до бази даних
+     */
+    private static void printWorkerWithMaxSalary(DatabaseQueryService queryService) {
+        List<Worker> workers = queryService.findWorkerWithMaxSalary();
+        System.out.println("Employee with the highest salary:");
+        workers.forEach(System.out::println);
+        System.out.println("----------------------------------------------------");
+    }
 
-        // Виводимо інформацію про молодшого та найстаршого працівника
-        System.out.println("Oldest and youngest employee: ");
-        for (Worker employee : workerOld) {
-            System.out.println(employee);
-        }
+    /**
+     * Виводить інформацію про найстаршого та наймолодшого працівників.
+     *
+     * @param queryService об'єкт DatabaseQueryService для виконання запитів до бази даних
+     */
+    private static void printOldestAndYoungestWorkers(DatabaseQueryService queryService) {
+        List<Worker> workers = queryService.findOldestAndYoungestWorkers();
+        System.out.println("Oldest and youngest employee:");
+        workers.forEach(System.out::println);
+        System.out.println("----------------------------------------------------");
+    }
 
-
+    /**
+     * Виводить інформацію про вартість кожного проєкту.
+     *
+     * @param queryService об'єкт DatabaseQueryService для виконання запитів до бази даних
+     */
+    private static void printProjectPrices(DatabaseQueryService queryService) {
         List<ProjectPrice> projectPrices = queryService.findProjectPrices();
-//         Виводимо інформацію про вартість кожного проєкту
-        System.out.println("Cost of each project: ");
-        for (
-                ProjectPrice project : projectPrices) {
-            System.out.println(project);
-        }
+        System.out.println("Cost of each project:");
+        projectPrices.forEach(System.out::println);
+        System.out.println("----------------------------------------------------");
     }
 }

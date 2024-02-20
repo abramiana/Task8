@@ -1,3 +1,4 @@
-SELECT *
-FROM worker
-WHERE SALARY = (SELECT MAX(SALARY) FROM worker);
+-- Вибірка працівників з найбільшою заробітною платою
+select *
+from worker
+where SALARY = (select MAX(SALARY) from worker);

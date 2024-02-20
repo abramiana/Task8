@@ -1,3 +1,6 @@
+/**
+ * Клас, що представляє клієнта з найбільшою кількістю проєктів і містить інформацію про його ім'я та кількість проєктів.
+ */
 public class MaxProjectCountClient {
     private String name;
     private int projectCount;

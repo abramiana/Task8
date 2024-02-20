@@ -1,5 +1,8 @@
 import java.util.Date;
 
+/**
+ * Клас, що представляє працівника з інформацією про ідентифікатор, ім'я, рівень, заробітну плату та дату народження.
+ */
 public class Worker {
     private int id;
     private String name;

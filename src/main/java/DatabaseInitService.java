@@ -19,10 +19,6 @@ public class DatabaseInitService {
             logger.info("Database initialization completed successfully.");
         } catch (SQLException | IOException e) {
             logger.error("Error occurred during database initialization: {}", e.getMessage());
-        } finally {
-            if (Database.getInstance().isConnected()) {
-                Database.getInstance().closeConnection();
-            }
         }
     }
 }
