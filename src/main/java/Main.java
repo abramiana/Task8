@@ -1,10 +1,14 @@
 import clientprocessing.*;
 import model.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import serivce.DatabaseQueryService;
 
 import java.util.List;
 
 public class Main {
+    private static final Logger logger = LogManager.getLogger(Main.class);
+
     public static void main(String[] args) {
         DatabaseQueryService queryService = new DatabaseQueryService();
         ClientService clientService = new ClientService();
@@ -35,7 +39,7 @@ public class Main {
     }
 
     /**
-     * Виводить інформацію про проекти з найбільшою тривалістю.
+     * Виводить інформацію про проєкти з найбільшою тривалістю.
      *
      * @param queryService об'єкт serivce.DatabaseQueryService для виконання запитів до бази даних
      */
@@ -89,8 +93,10 @@ public class Main {
         try {
             long clientId = clientService.create(name);
             System.out.println("Created client with ID: " + clientId);
+            logger.info("Created client with ID: {}", clientId);
         } catch (IllegalArgumentException e) {
             System.out.println("Error creating client: " + e.getMessage());
+            logger.error("Error creating client: {}", e.getMessage());
         }
     }
 
@@ -100,9 +106,10 @@ public class Main {
     private static void getClientName(ClientService clientService, long id) {
         try {
             System.out.println(clientService.getById(id));
+            logger.info(clientService.getById(id));
         } catch (IllegalArgumentException e) {
             System.out.println("Error getting client name: " + e.getMessage());
-            System.out.println("null"); // Повертаємо null в разі помилки
+            logger.error("Error getting client name: {}", e.getMessage());
         }
     }
 
@@ -113,8 +120,10 @@ public class Main {
         try {
             clientService.setName(id, name);
             System.out.println("Client name updated successfully.");
+            logger.info("Client id: {} name: {} updated successfully.", id, name);
         } catch (IllegalArgumentException e) {
             System.out.println("Error updating client name: " + e.getMessage());
+            logger.error("Error updating client name: {}", e.getMessage());
         }
     }
 
@@ -126,7 +135,9 @@ public class Main {
         try {
             clientService.deleteById(id);
             System.out.println("Client name delete successfully.");
+            logger.info("Client name delete successfully with ID: {} ", id);
         } catch (IllegalArgumentException e) {
+            logger.error("Error deleting client: {}", e.getMessage());
             System.out.println("Error deleting client: " + e.getMessage());
         }
     }
