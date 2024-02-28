@@ -19,6 +19,9 @@ public class ClientService {
         this.database = Database.getInstance();
     }
 
+    /**
+     * Метод для створення нового клієнта з заданим ім'ям
+     */
     public long create(String name) throws IllegalArgumentException {
         try (Connection connection = database.getConnection();
              PreparedStatement statement = connection.prepareStatement("INSERT INTO client (name) VALUES (?)",
@@ -41,6 +44,9 @@ public class ClientService {
         }
     }
 
+    /**
+     * Метод для отримання імені клієнта за його ідентифікатором
+     */
     public String getById(long id) throws IllegalArgumentException {
         try (Connection connection = database.getConnection();
              PreparedStatement statement = connection.prepareStatement("SELECT name FROM client WHERE id = ?")) {
@@ -58,6 +64,9 @@ public class ClientService {
         }
     }
 
+    /**
+     * Метод для встановлення імені клієнта за його ідентифікатором
+     */
     public void setName(long id, String name) throws IllegalArgumentException {
         try (Connection connection = database.getConnection();
              PreparedStatement statement = connection.prepareStatement("UPDATE client SET name = ? WHERE id = ?")) {
@@ -73,6 +82,9 @@ public class ClientService {
         }
     }
 
+    /**
+     * Метод для видалення клієнта за його ідентифікатором
+     */
     public void deleteById(long id) throws IllegalArgumentException {
         try (Connection connection = database.getConnection();
              PreparedStatement statement = connection.prepareStatement("DELETE FROM client WHERE id = ?")) {
@@ -87,6 +99,9 @@ public class ClientService {
         }
     }
 
+    /**
+     * Метод для отримання списку всіх клієнтів
+     */
     public List<Client> listAll() {
         List<Client> clients = new ArrayList<>();
         try (Connection connection = database.getConnection();
