@@ -3,6 +3,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import util.Database;
 
 import java.io.*;
 import java.sql.ResultSet;

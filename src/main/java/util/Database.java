@@ -1,3 +1,5 @@
+package util;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -31,9 +33,9 @@ public class Database {
     }
 
     /**
-     * Цей метод створює єдиний екземпляр класу Database
+     * Цей метод створює єдиний екземпляр класу util.Database
      */
-    public static synchronized Database getInstance() {
+    public static Database getInstance() {
         if (instance == null) {
             instance = new Database();
         }

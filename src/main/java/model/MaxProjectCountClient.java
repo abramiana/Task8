@@ -1,6 +1,13 @@
+package model;
+
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Клас, що представляє клієнта з найбільшою кількістю проєктів і містить інформацію про його ім'я та кількість проєктів.
  */
+@Getter
+@Setter
 public class MaxProjectCountClient {
     private String name;
     private int projectCount;
@@ -10,26 +17,10 @@ public class MaxProjectCountClient {
         this.projectCount = projectCount;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getProjectCount() {
-        return projectCount;
-    }
-
-    public void setProjectCount(int projectCount) {
-        this.projectCount = projectCount;
-    }
-
     @Override
     public String toString() {
 
-        return "LongestProject: \n"
+        return "model.LongestProject: \n"
                 + "Name: " + name +
                 ", Project count: " + projectCount +
                 "\n**********************************";

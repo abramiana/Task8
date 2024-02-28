@@ -1,3 +1,5 @@
+package model;
+
 import java.util.Date;
 
 /**
@@ -69,7 +71,7 @@ public class Worker {
 
     @Override
     public String toString() {
-        return "Worker: \n" +
+        return "model.Worker: \n" +
                 "id: " + id +
                 " Name: " + name +
                 " Level: " + level +

@@ -1,9 +1,16 @@
+package model;
+
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 
 /**
  * Клас, що представляє найтриваліший проєкт з інформацією про його ідентифікатор, дати початку та завершення,
  * тривалість у місяцях та ідентифікатор клієнта.
  */
+@Getter
+@Setter
 public class LongestProject {
     private int id;
     private Date startDate;
@@ -19,49 +26,9 @@ public class LongestProject {
         this.clientId = clientId;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getFinishDate() {
-        return finishDate;
-    }
-
-    public void setFinishDate(Date finishDate) {
-        this.finishDate = finishDate;
-    }
-
-    public int getDurationInMonths() {
-        return durationInMonths;
-    }
-
-    public void setDurationInMonths(int durationInMonths) {
-        this.durationInMonths = durationInMonths;
-    }
-
-    public int getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(int clientId) {
-        this.clientId = clientId;
-    }
-
     @Override
     public String toString() {
-        return "LongestProject: \n" +
+        return "model.LongestProject: \n" +
                 "Id: " + id +
                 ", Start: " + startDate +
                 ", Finish: " + finishDate +

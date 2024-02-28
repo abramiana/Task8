@@ -1,3 +1,5 @@
+package serivce;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -8,6 +10,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import  util.Database;
+import  model.*;
+
 
 /**
  * У цьому класі реалізовані методи для кожного SELECT запиту.
@@ -35,7 +40,7 @@ public class DatabaseQueryService {
         } catch (SQLException | IOException e) {
             logger.error("Error occurred while fetching max project count clients: {}", e.getMessage());
         }
-        logger.info("Database connection  {}", Database.getInstance().isConnected());
+        logger.info("util.Database connection  {}", Database.getInstance().isConnected());
         return result;
     }
 
@@ -62,7 +67,7 @@ public class DatabaseQueryService {
         } catch (SQLException | IOException e) {
             logger.error("Error occurred while fetching the longest project: {}", e.getMessage());
         }
-        logger.info("Database connection  {}", Database.getInstance().isConnected());
+        logger.info("util.Database connection  {}", Database.getInstance().isConnected());
         return result;
     }
 
@@ -81,7 +86,7 @@ public class DatabaseQueryService {
         } catch (SQLException | IOException e) {
             logger.error("Error occurred while fetching workers with max salary: {}", e.getMessage());
         }
-        logger.info("Database connection  {}", Database.getInstance().isConnected());
+        logger.info("util.Database connection  {}", Database.getInstance().isConnected());
         return result;
     }
 
@@ -101,7 +106,7 @@ public class DatabaseQueryService {
         } catch (SQLException | IOException e) {
             logger.error("Error occurred while fetching oldest and youngest workers: {}", e.getMessage());
         }
-        logger.info("Database connection  {}", Database.getInstance().isConnected());
+        logger.info("util.Database connection  {}", Database.getInstance().isConnected());
         return result;
     }
 
@@ -122,9 +127,9 @@ public class DatabaseQueryService {
         } catch (SQLException | IOException e) {
             logger.error("Error occurred while fetching project prices: {}", e.getMessage());
         }
-        logger.info("Database connection  {}", Database.getInstance().isConnected());
+        logger.info("util.Database connection  {}", Database.getInstance().isConnected());
         Database.getInstance().closeConnection(); // Закриття контакту з БД.
-        logger.info("Database connection  {}", Database.getInstance().isConnected());
+        logger.info("util.Database connection  {}", Database.getInstance().isConnected());
         return result;
 
     }
