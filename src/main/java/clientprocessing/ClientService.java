@@ -1,5 +1,7 @@
 package clientprocessing;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import util.Database;
 
 import java.sql.Connection;
@@ -10,15 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClientService {
+    private static final Logger logger = LogManager.getLogger(ClientService.class);
     private Database database;
 
     public ClientService() {
         this.database = Database.getInstance();
     }
 
-    /**
-     * Метод для створення нового клієнта з заданим ім'ям
-     */
     public long create(String name) throws IllegalArgumentException {
         try (Connection connection = database.getConnection();
              PreparedStatement statement = connection.prepareStatement("INSERT INTO client (name) VALUES (?)",
@@ -36,13 +36,11 @@ public class ClientService {
                 }
             }
         } catch (SQLException e) {
+            logger.error("Error creating client: " + e.getMessage());
             throw new IllegalArgumentException("Error creating client: " + e.getMessage());
         }
     }
 
-    /**
-     * Метод для отримання імені клієнта за його ідентифікатором
-     */
     public String getById(long id) throws IllegalArgumentException {
         try (Connection connection = database.getConnection();
              PreparedStatement statement = connection.prepareStatement("SELECT name FROM client WHERE id = ?")) {
@@ -55,13 +53,11 @@ public class ClientService {
                 }
             }
         } catch (SQLException e) {
+            logger.error("Error getting client name: " + e.getMessage());
             throw new IllegalArgumentException("Error getting client name: " + e.getMessage());
         }
     }
 
-    /**
-     * Метод для встановлення імені клієнта за його ідентифікатором
-     */
     public void setName(long id, String name) throws IllegalArgumentException {
         try (Connection connection = database.getConnection();
              PreparedStatement statement = connection.prepareStatement("UPDATE client SET name = ? WHERE id = ?")) {
@@ -72,13 +68,11 @@ public class ClientService {
                 throw new IllegalArgumentException("Client with ID " + id + " does not exist.");
             }
         } catch (SQLException e) {
+            logger.error("Error updating client name: " + e.getMessage());
             throw new IllegalArgumentException("Error updating client name: " + e.getMessage());
         }
     }
 
-    /**
-     * Метод для видалення клієнта за його ідентифікатором
-     */
     public void deleteById(long id) throws IllegalArgumentException {
         try (Connection connection = database.getConnection();
              PreparedStatement statement = connection.prepareStatement("DELETE FROM client WHERE id = ?")) {
@@ -88,13 +82,11 @@ public class ClientService {
                 throw new IllegalArgumentException("Client with ID " + id + " does not exist.");
             }
         } catch (SQLException e) {
+            logger.error("Error deleting client: " + e.getMessage());
             throw new IllegalArgumentException("Error deleting client: " + e.getMessage());
         }
     }
 
-    /**
-     * Метод для отримання списку всіх клієнтів
-     */
     public List<Client> listAll() {
         List<Client> clients = new ArrayList<>();
         try (Connection connection = database.getConnection();
@@ -106,6 +98,7 @@ public class ClientService {
                 clients.add(new Client(id, name));
             }
         } catch (SQLException e) {
+            logger.error("Error retrieving clients: " + e.getMessage());
             throw new IllegalArgumentException("Error retrieving clients: " + e.getMessage());
         }
         return clients;

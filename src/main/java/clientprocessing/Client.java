@@ -18,6 +18,6 @@ public class Client {
     public String toString() {
         return "Client " +
                 "id: " + id +
-                ", name=" + name;
+                ", name: " + name;
     }
 }
