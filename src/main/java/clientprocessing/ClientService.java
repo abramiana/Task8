@@ -48,12 +48,13 @@ public class ClientService {
      * Метод для отримання імені клієнта за його ідентифікатором
      */
     public String getById(long id) throws IllegalArgumentException {
+        String name = null;
         try (Connection connection = database.getConnection();
              PreparedStatement statement = connection.prepareStatement("SELECT name FROM client WHERE id = ?")) {
             statement.setLong(1, id);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    return resultSet.getString("name");
+                    name = resultSet.getString("name");
                 } else {
                     throw new IllegalArgumentException("Client with ID " + id + " does not exist.");
                 }
@@ -62,6 +63,7 @@ public class ClientService {
             logger.error("Error getting client name: " + e.getMessage());
             throw new IllegalArgumentException("Error getting client name: " + e.getMessage());
         }
+        return name;
     }
 
     /**
