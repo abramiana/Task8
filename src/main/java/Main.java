@@ -102,7 +102,6 @@ public class Main {
             System.out.println(clientService.getById(id));
         } catch (IllegalArgumentException e) {
             System.out.println("Error getting client name: " + e.getMessage());
-            System.out.println("null"); // Повертаємо null в разі помилки
         }
     }
 
